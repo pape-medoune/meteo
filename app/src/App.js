@@ -8,7 +8,7 @@ function App() {
   const [lon,setLon] = useState();
   const dat = new Date();
   const date = dat.getDate();
-  const apiKey = "ed52192036a9b04a04c94760df27454b"
+  const apiKey = ""
 
   const fetchElement = async ()=>{
     axios.get(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${date}&appid=${apiKey}`)
