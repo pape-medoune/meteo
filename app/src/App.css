@@ -1,0 +1,9 @@
+.app{
+  width: 100%;
+  height: 100vh;
+  background: url(../components/images/pexels-magda-ehlers-2114014.jpg)rgba(0, 0, 0, 0.25);
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: darken;
+}
+ 
