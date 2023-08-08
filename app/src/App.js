@@ -21,19 +21,7 @@ function App() {
   useEffect(()=>{
     fetchElement();
   },[])
-  // const fetchElement = async (e)=>{
-  //   e.preventdefault();
-  //   axios.get(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${date}&appid=${apiKey}`)
-  // .then(res => {
-  //   const dt = res.data.data; // Change "data" to the actual property name in the API response
-  //   setElement(dt);
-  //   console.log(dt)
-  //   alert("Data displayed successfully");
-  // })
-  // .catch(err => {
-  //   console.error(err);
-  // });
-  // }
+  
 
   const handleClick = (e)=>{
     e.preventDefault();

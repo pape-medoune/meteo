@@ -15,17 +15,17 @@ app.use(function (req, res, next) {
 const apiKey = "";
 
 app.get("/display", (req, res) => {
-  const { lon, lat } = req.query; // Utilisez req.query au lieu de req.body pour les requêtes GET
+  const { lon, lat } = req.query; 
   axios
     .get(
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
     )
     .then(response => {
-      res.send(response.data); // Utilisez response.data directement
+      res.send(response.data);
     })
     .catch(error => {
       console.error(error);
-      res.status(500).send("Une erreur s'est produite."); // Envoyez une réponse d'erreur appropriée
+      res.status(500).send("Une erreur s'est produite."); 
     });
 });
 
