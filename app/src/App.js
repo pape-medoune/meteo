@@ -6,7 +6,6 @@ function App() {
   const [element,setElement]= useState([]);
   const [lat,setLat] = useState();
   const [lon,setLon] = useState();
-  const dat = new Date();
 
   const fetchElement = ()=>{
     axios.get("localhost:4400/display")
@@ -38,9 +37,9 @@ function App() {
 
   const handleClick = (e)=>{
     e.preventDefault();
-    axios.get("localhost:4400/display",{
+    axios.post("localhost:4400/add",{
       header:{
-        "content-type": "APPLICATION/JSON",
+        "content-type": "Application/JSON",
       },
       body : JSON.stringify({lat,lon})
     })
@@ -65,11 +64,11 @@ function App() {
   </div>
   <div class="grid  md:grid-cols-2 md:gap-6 ">
     <div class="relative z-0 w-full mb-6 group ">
-        <input type="text" name="longitude" value={lon} onChange={(e)=>{setLon(e.target.value)}} id="longitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input type="text" name="lon" value={lon} onChange={(e)=>{setLon(e.target.value)}} id="longitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label htmlFor="longitude"  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Longitude</label>
     </div>
     <div class="relative z-0 w-full mb-6 group">
-        <input type="text" name="latitude" value={lat} onChange={(e)=>{setLat(e.target.value)}} id="latitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <input type="text" name="lat" value={lat} onChange={(e)=>{setLat(e.target.value)}} id="latitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label htmlFor="latitude" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Latitude</label>
     </div>
   </div> 
@@ -81,9 +80,9 @@ function App() {
 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     
     <div class="p-5">
-            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{ele.temperature}</h5>
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{ele.weather.description}</h5>
         
-        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{ele.cloud}.</p>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{ele.visibility}.</p>
         
     </div>
 </div>
