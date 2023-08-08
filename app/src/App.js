@@ -1,5 +1,5 @@
 import './App.css';
-import   {useState} from 'react'
+import   {useEffect, useState} from 'react'
 import axios from 'axios'
 function App() {
   
@@ -7,23 +7,52 @@ function App() {
   const [lat,setLat] = useState();
   const [lon,setLon] = useState();
   const dat = new Date();
-  const date = dat.getDate();
-  const apiKey = ""
 
-  const fetchElement = async ()=>{
-    axios.get(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${date}&appid=${apiKey}`)
-  .then(res => {
-    const dt = res.data.data; // Change "data" to the actual property name in the API response
-    setElement(dt);
-    console.log(dt)
-    alert("Data displayed successfully");
-  })
-  .catch(err => {
-    console.error(err);
-  });
+  const fetchElement = ()=>{
+    axios.get("localhost:4400/display")
+    .then(res => {
+      console.log(res)
+      setElement(res.data);
+    })
+    .catch(err => {
+      console.error(err); 
+    })
   }
 
+  useEffect(()=>{
+    fetchElement();
+  },[])
+  // const fetchElement = async (e)=>{
+  //   e.preventdefault();
+  //   axios.get(`https://api.openweathermap.org/data/3.0/onecall/timemachine?lat=${lat}&lon=${lon}&dt=${date}&appid=${apiKey}`)
+  // .then(res => {
+  //   const dt = res.data.data; // Change "data" to the actual property name in the API response
+  //   setElement(dt);
+  //   console.log(dt)
+  //   alert("Data displayed successfully");
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  // });
+  // }
 
+  const handleClick = (e)=>{
+    e.preventDefault();
+    axios.get("localhost:4400/display",{
+      header:{
+        "content-type": "APPLICATION/JSON",
+      },
+      body : JSON.stringify({lat,lon})
+    })
+    .then(res => {
+      console.log(res)
+      setElement(res.data);
+      alert("Donnée affiché avec succés")
+    })
+    .catch(err => {
+      console.error(err); 
+    })
+  } 
   
   return (
     <div className='app w-full items-center flex flex-col h-screen'>
@@ -36,33 +65,15 @@ function App() {
   </div>
   <div class="grid  md:grid-cols-2 md:gap-6 ">
     <div class="relative z-0 w-full mb-6 group ">
-    <input
-  type="text"
-  name="lon"
-  value={lon}
-  onChange={(e) => setLon(e.target.value)} // Make sure this is updating the lon state
-  id="longitude"
-  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-  placeholder=" "
-  required
-/>
+        <input type="text" name="longitude" value={lon} onChange={(e)=>{setLon(e.target.value)}} id="longitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label htmlFor="longitude"  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Longitude</label>
     </div>
     <div class="relative z-0 w-full mb-6 group">
-    <input
-  type="text"
-  name="lat"
-  value={lat}
-  onChange={(e) => setLat(e.target.value)} // Make sure this is updating the lat state
-  id="latitude"
-  className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-  placeholder=" "
-  required
-/>
+        <input type="text" name="latitude" value={lat} onChange={(e)=>{setLat(e.target.value)}} id="latitude" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
         <label htmlFor="latitude" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Latitude</label>
     </div>
   </div> 
-  <button type="submit" onClick={fetchElement} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[100%] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Envoyer la requête</button>
+  <button type="submit" onClick={handleClick} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-[100%] sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Envoyer la requête</button>
 </form> 
     <div>
     {element.map((ele)=>(
