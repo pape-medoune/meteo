@@ -21,7 +21,7 @@ app.get("/display", (req, res) => {
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`
     )
     .then(response => {
-      res.send(response.data);
+      res.send(response.data); 
     })
     .catch(error => {
       console.error(error);
